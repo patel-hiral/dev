@@ -12,7 +12,7 @@ jobs:
     steps:
       # Step 1: Checkout the Dev Repository
       - name: Checkout Dev Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Step 2: Push Code to Production Repo using PAT Token
       - name: Sync with Production Repo
