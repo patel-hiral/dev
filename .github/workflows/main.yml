@@ -15,8 +15,8 @@ jobs:
 
       - name: Add Production Repository as Remote
         run: |
-          git config --global user.email "github-actions@github.com"
-          git config --global user.name "GitHub Actions"
+          git config --global user.email "hiral.patel@differenzsystem.com"
+          git config --global user.name "Hiral Patel"
           git remote add prod_repo https://x-access-token:${{ secrets.PRODUCTION_TOKEN }}@github.com/patel-hiral/production.git
           git fetch prod_repo
 
