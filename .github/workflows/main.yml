@@ -19,5 +19,5 @@ jobs:
         run: |
           git config --global user.email "hiral.patel@differenzsystem.com"
           git config --global user.name "Hiral Patel"
-          git remote add prod_repo https://x-access-token:${{ secrets.PROD_REPO_TOKEN }}@github.com/patel-hiral/production.git
+          git remote add prod_repo https://x-access-token:${{ secrets.PRODUCTION_TOKEN }}@github.com/patel-hiral/production.git
           git push prod_repo main:main --force  # Push main to main
