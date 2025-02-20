@@ -1,0 +1,35 @@
+name: Push Stable Code to Production Repo
+
+on:
+  push:
+    branches:
+      - main  # Runs only when main is updated
+
+jobs:
+  push-to-prod:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Dev Repository
+        uses: actions/checkout@v4
+
+      - name: Set Up SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.PROD_DEPLOY_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - name: Clone Production Repository
+        run: |
+          git clone --bare git@github.com:patel-hiral/production.git prod-repo
+          cd prod-repo
+          git push --mirror git@github.com:patel-hiral/production.git
+
+      - name: Push Code to Production Repository
+        run: |
+          cd prod-repo
+          git fetch --all
+          git reset --hard origin/main
+          git pull origin main
+          git push origin main
