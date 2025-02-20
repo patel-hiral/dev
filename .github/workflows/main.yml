@@ -16,9 +16,11 @@ jobs:
       - name: Set Up SSH Key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.PROD_DEPLOY_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          echo "${{ secrets.PROD_DEPLOY_KEY }}" > ~/.ssh/prod-deploy-key
+          chmod 600 ~/.ssh/prod-deploy-key
           ssh-keyscan github.com >> ~/.ssh/known_hosts
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/prod-deploy-key
 
       - name: Clone Production Repository
         run: |
