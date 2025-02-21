@@ -18,7 +18,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.PROD_DEPLOY_KEY }}" > ~/.ssh/prod-deploy-key
           chmod 600 ~/.ssh/prod-deploy-key
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          ssh-keyscan github.com >> ~/.ssh/prod-deploy-key
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/prod-deploy-key
 
