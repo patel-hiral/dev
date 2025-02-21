@@ -19,14 +19,22 @@ jobs:
 
       
       - name: Checkout Repository
-        uses: actions/checkout@v4  # Ensures Git repo is available
-
-      - name: Verify Git Repository
-        run: git status  # Checks if the directory is a valid Git repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch full history to allow merging
 
       - name: Add Production Remote
         run: git remote add prod git@github.com:patel-hiral/production.git
 
-      - name: Force Push to Production
-        run: git push --force prod main
+      - name: Fetch Latest Changes
+        run: git fetch prod main  # Get latest changes from production
+
+      - name: Merge or Rebase with Production
+        run: |
+          git checkout main
+          git merge --no-edit prod/main || git rebase prod/main
+
+      - name: Push to Production
+        run: git push prod main
+
 
