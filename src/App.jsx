@@ -5,7 +5,7 @@ export default function App() {
     <div>
       <Navbar />
       <main className='h-screen flex items-center justify-center bg-slate-900 text-white'>
-        <h1 className='text-4xl'>Hello There, It Works on DEV.</h1>
+        <h1 className='text-4xl'>Hello There, It Works on DEV(Hello There).</h1>
       </main>
       <Footer />
     </div>
