@@ -1,12 +1,13 @@
-name: Deploy to Production
+name: Push to Production Repository
  
+# Triggers Action When We Push in Main Branch On Development Repository
 on:
   push:
     branches:
       - main
  
 jobs:
-  deploy:
+  push_to_production:
     runs-on: ubuntu-latest
  
     steps:
@@ -17,7 +18,6 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
  
-      
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
@@ -28,14 +28,14 @@ jobs:
             git config --global user.email "patel.hiral@differenzsystem.com"
             git config --global user.name "Hiral Patel"
  
-      - name: Add Production Remote
+      - name: Add Production Repository as Remote origin
         run: git remote add prod git@github.com:patel-hiral/production.git
  
-      - name: Fetch Latest Changes
+      - name: Fetch Latest Changes from production repository
         run: git fetch prod main  # Get latest changes from production
  
-      # Handle Merge Conflicts Automatically
-      - name: Merge Dev into Production
+      # Handles Merge Conflicts
+      - name: Merge Dev Repo into Production
         run: |
           git checkout main
           git merge prod main --strategy=ours || true  # Keeps our changes, prevents failure
