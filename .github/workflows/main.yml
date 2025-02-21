@@ -13,11 +13,10 @@ jobs:
       - name: Setup SSH Key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-      
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
@@ -25,21 +24,20 @@ jobs:
 
       - name: Set Git Identity
         run: |
-            git config --global user.email "patel.hiral@differenzsystem.com"
-            git config --global user.name "Hiral Patel"
+          git config --global user.email "patel.hiral@differenzsystem.com"
+          git config --global user.name "Hiral Patel"
 
       - name: Add Production Remote
-        run: git remote add prod git@github.com:patel-hiral/production.git
+        run: |
+          git remote add prod git@github.com:patel-hiral/production.git
+          git fetch prod main  # Get latest changes from production
 
-      - name: Fetch Latest Changes
-        run: git fetch prod main  # Get latest changes from production
-
-      # Handle Merge Conflicts Automatically
-      - name: Merge Dev into Production
+      - name: Exclude .github/workflows/ from Merge
         run: |
           git checkout main
-          git merge prod/main --strategy=ours || true  # Keeps our changes, prevents failure
-          git commit -am "Auto-resolved merge conflicts from Dev to Production" || true
-          git push prod main --force  # Force push changes to Production
-
-
+          git pull origin main
+          git checkout -b temp-branch
+          git checkout prod/main -- .  # Bring in production code without the workflow
+          git reset HEAD .github/workflows/*  # Remove workflow files from commit
+          git commit -m "Merge changes from Dev to Production without workflow files"
+          git push prod temp-branch:main  # Push to production
