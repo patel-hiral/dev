@@ -21,11 +21,6 @@ jobs:
         run: |
           ssh -vT git@github.com
 
-      - name: Verify SSH Key
-        run: |
-          ls -la ~/.ssh
-          ssh -vT git@github.com
-          
       - name: Push Code to Prod Repo
         run: |
           git remote add prod git@github.com:patel-hiral/production.git
