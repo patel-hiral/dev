@@ -10,16 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Dev Repo Code
-        uses: actions/checkout@v3
-
       - name: Setup SSH Key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
-
+          
+      - name: Test SSH Connection
+        run: |
+          ssh -vT git@github.com
+  
       - name: Push Code to Prod Repo
         run: |
           git remote add prod git@github.com:patel-hiral/production.git
