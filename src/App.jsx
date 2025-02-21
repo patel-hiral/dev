@@ -5,7 +5,7 @@ export default function App() {
   return (
     <div className="main">
       <Navbar />
-      <h1>Hello There, It Works on DEV(I'm FROM DEV)</h1>
+      <h1>Hello There, It Works on DEV(I'm FROM DEV Heyya)</h1>
       <Footer />
     </div>
   )
