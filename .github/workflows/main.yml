@@ -30,14 +30,15 @@ jobs:
       - name: Add Production Remote
         run: |
           git remote add prod git@github.com:patel-hiral/production.git
-          git fetch prod main  # Get latest changes from production
+          git fetch prod main  # Fetch latest changes from production
 
-      - name: Exclude .github/workflows/ from Merge
+      - name: Merge Without Workflow Files
         run: |
           git checkout main
-          git pull origin main
+          git pull origin main  # Ensure latest Dev changes
           git checkout -b temp-branch
-          git checkout prod/main -- .  # Bring in production code without the workflow
-          git reset HEAD .github/workflows/*  # Remove workflow files from commit
-          git commit -m "Merge changes from Dev to Production without workflow files"
-          git push prod temp-branch:main  # Push to production
+          git pull prod main --rebase  # Rebase production changes
+          git checkout prod/main -- .  # Bring in all production files
+          git reset HEAD .github/workflows/*  # Exclude workflow files
+          git commit -m "Merge Dev to Production without workflow files"
+          git push --force prod temp-branch:main  # Push with force to avoid conflicts
