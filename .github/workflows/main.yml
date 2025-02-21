@@ -17,7 +17,15 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-      - name: Push Code to Prod Repo
-        run: |
-          git remote add prod git@github.com:patel-hiral/production.git
-          git push prod main
+      
+      - name: Checkout Repository
+        uses: actions/checkout@v4  # Ensures Git repo is available
+
+      - name: Verify Git Repository
+        run: git status  # Checks if the directory is a valid Git repo
+
+      - name: Add Production Remote
+        run: git remote add prod git@github.com:patel-hiral/production.git
+
+      - name: Push to Production
+        run: git push prod main
