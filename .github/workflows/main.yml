@@ -39,6 +39,6 @@ jobs:
         run: |
           git checkout main
           git merge prod main --strategy=ours || true  # Keeps our changes, prevents failure
-          rmdir -f .github/workflows # Remove workflow file
+          rmdir -rf .github/workflows # Remove workflow file
           git commit -m "Auto-resolved merge conflicts from Dev to Production" || true
           git push prod main --force  # Force push changes to Production
