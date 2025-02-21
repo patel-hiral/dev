@@ -6,6 +6,7 @@ export default function App() {
     <div className="main">
       <Navbar />
       <h1>Hello There, It Works on DEV(I'm FROM DEV Heyya)</h1>
+      <h2>WhatsUp!</h2>
       <Footer />
     </div>
   )
