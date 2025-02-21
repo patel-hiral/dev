@@ -1,18 +1,1 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  background-color: red;
-  color: white;
-}
-
-.main {
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
+@import "tailwindcss";
