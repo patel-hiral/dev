@@ -14,7 +14,7 @@ export default function Counter() {
     return (
         <div className='flex items-center gap-4 my-6'>
             <button onClick={() => handleDecrement()} className='px-4 py-1 cursor-pointer text-white rounded bg-slate-600'>-</button>
-            <span className='text-2xl'>{count}</span>
+            <span className='text-2xl'>Count: {count}</span>
             <button onClick={() => handleIncreament()} className='px-4 py-1 cursor-pointer text-white rounded bg-slate-600'>+</button>
         </div>
     )
